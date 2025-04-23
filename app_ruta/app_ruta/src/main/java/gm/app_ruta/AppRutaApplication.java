@@ -2,9 +2,11 @@ package gm.app_ruta;
 
 import gm.app_ruta.modelo.Articulo;
 import gm.app_ruta.modelo.Cliente;
+import gm.app_ruta.modelo.Pago;
 import gm.app_ruta.modelo.Venta;
 import gm.app_ruta.servicio.IArticuloServicio;
 import gm.app_ruta.servicio.IClienteServicio;
+import gm.app_ruta.servicio.IPagoServicio;
 import gm.app_ruta.servicio.IVentaServicio;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +25,8 @@ public class AppRutaApplication implements CommandLineRunner {
 	private IClienteServicio clienteServicio;
 	@Autowired
 	private IVentaServicio ventaServicio;
+	@Autowired
+	private IPagoServicio pagoServicio;
 
 	private static final Logger logger= LoggerFactory.getLogger(AppRutaApplication.class);
 	private String menuArticulo= """
@@ -49,6 +53,7 @@ public class AppRutaApplication implements CommandLineRunner {
 				1.Listado de ventas
 				2. Realizar una venta
 				3. Registrar pago de un cliente
+				4. Historial de Pagos
 				Seleccione la opcion a realizar:\s""";
 
 	public static void main(String[] args) {
@@ -321,6 +326,34 @@ public class AppRutaApplication implements CommandLineRunner {
 				else
 					logger.info("La respuesta no es valida. Digite una opción valida.");
 			}
+			case 3 -> ejecutarPago();
+			case 4 -> {
+				var pagos = pagoServicio.listarPagos();
+				pagos.forEach(pago -> logger.info(pago.toString()));
+			}
+		}
+	}
+	private void ejecutarPago(){
+		var consola= new Scanner(System.in);
+		logger.info("--- Registrar pago ---");
+		logger.info("Ingrese el ID del cliente");
+		var idCliente= Integer.parseInt(consola.nextLine());
+		var cliente = clienteServicio.buscarClienteporID(idCliente);
+		if (cliente != null){
+			logger.info("Cobrador: ");
+			var cobrador= consola.nextLine();
+			logger.info("Monto del pago: ");
+			var montoPago= Double.parseDouble(consola.nextLine());
+			var nuevoMontoDeuda= (cliente.getTotalAdeudado()) - montoPago;
+			var pago= new Pago();
+			pago.setCobrador(cobrador);
+			pago.setNombreCliente(cliente.getNombre());
+			pago.setMontoPago(montoPago);
+			pago.setFecha(LocalDate.now().toString());
+			cliente.setTotalAdeudado(nuevoMontoDeuda);
+			pagoServicio.realizarPago(pago);
+			clienteServicio.modificarCliente(cliente);
+			logger.info("El pago de ha sido registrado y aplicado satisfactoriamente. El monto restante del cliente es: "+cliente.getTotalAdeudado());
 		}
 	}
 }
