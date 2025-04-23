@@ -319,7 +319,7 @@ public class AppRutaApplication implements CommandLineRunner {
 					logger.info("La venta se ha realizado con exito. "+venta);
 				}
 				else
-					logger.info("La respuesta no es valida");
+					logger.info("La respuesta no es valida. Digite una opción valida.");
 			}
 		}
 	}
