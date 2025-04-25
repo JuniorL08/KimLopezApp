@@ -1,5 +1,6 @@
 package gm.app_ruta;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
 import gm.app_ruta.gui.InicioForma;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,7 +13,7 @@ import javax.swing.*;
 public class AppRutaSwing {
     public static void main(String[] args) {
         //Activar el modo oscuro
-
+        FlatDarculaLaf.setup();
         //Instancia de la fabrica de Spring
         ConfigurableApplicationContext contextSpring = new SpringApplicationBuilder(AppRutaSwing.class).
                 headless(false).
