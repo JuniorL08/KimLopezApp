@@ -17,7 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class AppRutaApplication implements CommandLineRunner {
 	@Autowired
 	private IArticuloServicio articuloServicio;

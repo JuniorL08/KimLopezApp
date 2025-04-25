@@ -1,5 +1,6 @@
 package gm.app_ruta.gui;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
@@ -10,10 +11,14 @@ public class InicioForma extends JFrame{
     private JButton CLIENTESButton;
     private JButton VENTASButton;
 
+    @Autowired
+    public InicioForma(){
+        iniciarForma();
+    }
     private void iniciarForma(){
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900,700);
-        setLocation(null);
+        setLocationRelativeTo(null);
     }
 }
