@@ -2,6 +2,7 @@ package gm.app_ruta.gui;
 
 import gm.app_ruta.modelo.Articulo;
 import gm.app_ruta.servicio.ArticuloServicio;
+import gm.app_ruta.servicio.ClienteServicio;
 import gm.app_ruta.servicio.IArticuloServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,11 +32,11 @@ public class ArticuloForma extends JFrame{
     private Integer idArticulo;
 
     @Autowired
-    public ArticuloForma(ArticuloServicio articuloServicio){
+    public ArticuloForma(ArticuloServicio articuloServicio, ClienteServicio clienteServicio){
         this.articuloServicio = articuloServicio;
         iniciarForma();
         volverAlInicioButton.addActionListener(e -> {
-            var inicio= new InicioForma(articuloServicio);
+            var inicio= new InicioForma(articuloServicio, clienteServicio);
             inicio.setVisible(true);
             this.dispose();
         });
@@ -60,10 +61,15 @@ public class ArticuloForma extends JFrame{
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        this.tablaModeloArticulo = new DefaultTableModel(0, 7);
+        this.tablaModeloArticulo = new DefaultTableModel(0, 6){
+            //Se desactivo que la tabla pueda ser editable
+            public boolean isCellEditable(int row, int column ){return false;}
+        };
         String[] cabeceros= {"Id", "Nombre", "Marca", "Modelo", "Precio de Compra", "Precio al Cash", "Precio a Credito"};
         this.tablaModeloArticulo.setColumnIdentifiers(cabeceros);
         this.articuloTabla = new JTable(tablaModeloArticulo);
+        //Restringimos la tabla a que solo pueda seleccionar una fila
+        this.articuloTabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         //Cargar Listado de clientes
         listarArticulos();
     }
