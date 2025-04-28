@@ -1,9 +1,7 @@
 package gm.app_ruta.gui;
 
 import gm.app_ruta.modelo.Cliente;
-import gm.app_ruta.servicio.ArticuloServicio;
-import gm.app_ruta.servicio.ClienteServicio;
-import gm.app_ruta.servicio.IClienteServicio;
+import gm.app_ruta.servicio.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javax.swing.*;
@@ -31,11 +29,12 @@ public class ClienteForma extends JFrame{
     private Integer idCliente;
 
     @Autowired
-    public ClienteForma(ArticuloServicio articuloServicio, ClienteServicio clienteServicio){
+    public ClienteForma(ArticuloServicio articuloServicio, ClienteServicio clienteServicio,
+                        VentaServicio ventaServicio, PagoServicio pagoServicio){
         this.clienteServicio = clienteServicio;
         iniciarForma();
         volverAInicioButton.addActionListener(e -> {
-            var inicio = new InicioForma(articuloServicio,clienteServicio);
+            var inicio = new InicioForma(articuloServicio,clienteServicio, ventaServicio, pagoServicio);
             inicio.setVisible(true);
             this.dispose();
         });
