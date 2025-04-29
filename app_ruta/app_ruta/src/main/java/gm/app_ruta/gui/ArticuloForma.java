@@ -48,7 +48,7 @@ public class ArticuloForma extends JFrame{
             }
         });
         limpiarButton.addActionListener(e -> limpiarFormulario());
-        eliminarButton.addActionListener(e -> eliminarCliente());
+        eliminarButton.addActionListener(e -> eliminarArticulo());
     }
 
     private void iniciarForma(){
@@ -124,7 +124,7 @@ public class ArticuloForma extends JFrame{
         var marca= articuloMarcaTexto.getText();
         var modelo= articuloModeloTexto.getText();
         var precioCompra= Double.parseDouble(articuloPrecioCompraTexto.getText());
-        var precioCash= Double.parseDouble(articuloPrecioCompraTexto.getText());
+        var precioCash= Double.parseDouble(articuloPrecioCashTexto.getText());
         var precioCreditoP= Double.parseDouble(precioCredito.getText());
         var articulo = new Articulo(this.idArticulo, nombre, marca, modelo,precioCompra,precioCash,precioCreditoP);
         this.articuloServicio.agregarArticulo(articulo);//Se inserta el articulo
@@ -159,7 +159,7 @@ public class ArticuloForma extends JFrame{
             this.precioCredito.setText(precioCreditoP);
         }
     }
-    private void eliminarCliente(){
+    private void eliminarArticulo(){
         var renglon = articuloTabla.getSelectedRow();
         if(renglon != -1){
             var idArticuloStr = articuloTabla.getModel().getValueAt(renglon, 0).toString();
