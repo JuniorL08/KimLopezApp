@@ -244,7 +244,7 @@ public class AppRutaApplication implements CommandLineRunner {
 				var ventas= ventaServicio.listarVentas();
 				ventas.forEach(venta -> logger.info(venta.toString()));
 			}
-			case 2 ->{;
+			case 2 ->{
 				logger.info("--- Realizar Venta ---");
 				logger.info("Es nuevo cliente (Si/No)? ");
 				var respuesta= consola.nextLine().toLowerCase().strip();
