@@ -40,6 +40,16 @@ public class VentasInicio extends JFrame{
             historicoPagos.setVisible(true);
             this.dispose();
         });
+        registrarUnPagoButton.addActionListener(e -> {
+            var realizarPagos= new PagosForma(pagoServicio,ventaServicio,clienteServicio,articuloServicio);
+            realizarPagos.setVisible(true);
+            this.dispose();
+        });
+        registrarUnaVentaButton.addActionListener(e -> {
+            var realizarVentas= new VentasForma(ventaServicio,pagoServicio,clienteServicio,articuloServicio);
+            realizarVentas.setVisible(true);
+            this.dispose();
+        });
     }
 
     private void iniciarForma(){
